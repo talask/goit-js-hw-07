@@ -19,19 +19,48 @@ function createGallery(galleryArr){
             </a>
         </li>
         `;
-    }).join();
+    }).join('');
     gallery.innerHTML = newGallery;
 }
 
 gallery.addEventListener("click", fnGetItemGallery);
 
 function fnGetItemGallery(e) {
- const {target} = e;
+    e.preventDefault(); 
+    const {target} = e;
 
- if (target.className !== "gallery__image") {
-    return;
-  }
+    if (target.className !== "gallery__image") {
+        return;
+    }
 
-  const selectedImg = target.dataset.source;
-  console.log(selectedImg);
+    const selectedImg = target.dataset.source;
+    const altData = target.getAttribute('alt');
+     
+    const instance = basicLightbox.create(`
+        <img
+        class="gallery__image"
+        src="${selectedImg}"
+        alt="${altData}"
+        width="800" 
+        height="600"
+        />
+    `);
+    
+   console.log(instance);
+   
+    instance.show();
+    if(instance.visible()){
+        document.onkeydown = (evt) => { 
+            console.log(evt.key);
+            if (evt.key === "Escape" || evt.code === 27) {
+                instance.close();
+                
+            }
+        };
+    }
+
+    
+    
+    
 }
+
