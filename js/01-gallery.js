@@ -50,16 +50,17 @@ function fnGetItemGallery(e) {
    
     instance.show();
     if(instance.visible()){
-        document.onkeydown = (evt) => { 
+        document.addEventListener("keydown", fnEscClick);
+         
+    }
+
+   function fnEscClick(evt) { 
             console.log(evt.key);
             if (evt.key === "Escape" || evt.code === 27) {
                 instance.close();
-                
+                document.removeEventListener("keydown", fnEscClick);
             }
-        };
-    }
-
-    
+    } 
     
     
 }
